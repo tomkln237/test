@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <!-- We only include this to explicitly loosen the CSP of various packager environments. It does not provide any security. -->
   <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: blob:">
-  <title>Projekt</title>
+  <title>neuertest</title>
   <style>
     body {
       color: #ffffff;
@@ -249,9 +249,55 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
       scaffolding.setAccentColor("#ff4c4c");
 
       try {
-        scaffolding.addCloudProvider(new Scaffolding.Cloud.WebSocketProvider(["wss://clouddata.turbowarp.org","wss://clouddata.turbowarp.xyz"], "p4-@Projekt.sb3"));
+        scaffolding.addCloudProvider(new Scaffolding.Cloud.WebSocketProvider(["wss://clouddata.turbowarp.org","wss://clouddata.turbowarp.xyz"], "p4-@neuertest.sb3"));
       } catch (error) {
         console.error(error);
+      }
+
+      if (document.fullscreenEnabled || document.webkitFullscreenEnabled) {
+        let isFullScreen = !!(document.fullscreenElement || document.webkitFullscreenElement);
+        const fullscreenButton = document.createElement('img');
+        fullscreenButton.draggable = false;
+        fullscreenButton.className = 'control-button fullscreen-button';
+        fullscreenButton.addEventListener('click', () => {
+          if (isFullScreen) {
+            if (document.exitFullscreen) {
+              document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+              document.webkitExitFullscreen();
+            }
+          } else {
+            if (document.body.requestFullscreen) {
+              document.body.requestFullscreen();
+            } else if (document.body.webkitRequestFullscreen) {
+              document.body.webkitRequestFullscreen();
+            }
+          }
+        });
+        const otherControlsExist = false;
+        const fillColor = otherControlsExist ? '#575E75' : '#ffffff';
+        const updateFullScreen = () => {
+          isFullScreen = !!(document.fullscreenElement || document.webkitFullscreenElement);
+          document.body.classList.toggle('is-fullscreen', isFullScreen);
+          if (isFullScreen) {
+            fullscreenButton.src = 'data:image/svg+xml,' + encodeURIComponent('<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><g fill="' + fillColor + '" fill-rule="evenodd"><path d="M12.662 3.65l.89.891 3.133-2.374a.815.815 0 011.15.165.819.819 0 010 .986L15.467 6.46l.867.871c.25.25.072.664-.269.664L12.388 8A.397.397 0 0112 7.611V3.92c0-.341.418-.514.662-.27M7.338 16.35l-.89-.89-3.133 2.374a.817.817 0 01-1.15-.166.819.819 0 010-.985l2.37-3.143-.87-.871a.387.387 0 01.27-.664L7.612 12a.397.397 0 01.388.389v3.692a.387.387 0 01-.662.27M7.338 3.65l-.89.891-3.133-2.374a.815.815 0 00-1.15.165.819.819 0 000 .986l2.37 3.142-.87.871a.387.387 0 00.27.664L7.612 8A.397.397 0 008 7.611V3.92a.387.387 0 00-.662-.27M12.662 16.35l.89-.89 3.133 2.374a.817.817 0 001.15-.166.819.819 0 000-.985l-2.368-3.143.867-.871a.387.387 0 00-.269-.664L12.388 12a.397.397 0 00-.388.389v3.692c0 .342.418.514.662.27"/></g></svg>');
+          } else {
+            fullscreenButton.src = 'data:image/svg+xml,' + encodeURIComponent('<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><g fill="' + fillColor + '" fill-rule="evenodd"><path d="M16.338 7.35l-.89-.891-3.133 2.374a.815.815 0 01-1.15-.165.819.819 0 010-.986l2.368-3.142-.867-.871a.387.387 0 01.269-.664L16.612 3a.397.397 0 01.388.389V7.08a.387.387 0 01-.662.27M3.662 12.65l.89.89 3.133-2.374a.817.817 0 011.15.166.819.819 0 010 .985l-2.37 3.143.87.871c.248.25.071.664-.27.664L3.388 17A.397.397 0 013 16.611V12.92c0-.342.418-.514.662-.27M3.662 7.35l.89-.891 3.133 2.374a.815.815 0 001.15-.165.819.819 0 000-.986L6.465 4.54l.87-.871a.387.387 0 00-.27-.664L3.388 3A.397.397 0 003 3.389V7.08c0 .341.418.514.662.27M16.338 12.65l-.89.89-3.133-2.374a.817.817 0 00-1.15.166.819.819 0 000 .985l2.368 3.143-.867.871a.387.387 0 00.269.664l3.677.005a.397.397 0 00.388-.389V12.92a.387.387 0 00-.662-.27"/></g></svg>');
+          }
+        };
+        updateFullScreen();
+        document.addEventListener('fullscreenchange', updateFullScreen);
+        document.addEventListener('webkitfullscreenchange', updateFullScreen);
+        if (otherControlsExist) {
+          fullscreenButton.className = 'control-button fullscreen-button';
+          scaffolding.addControlButton({
+            element: fullscreenButton,
+            where: 'top-right'
+          });
+        } else {
+          fullscreenButton.className = 'standalone-fullscreen-button';
+          document.body.appendChild(fullscreenButton);
+        }
       }
 
       vm.setTurboMode(false);
@@ -308,7 +354,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
           ), true);
         }
       };
-      let projectDecodeBuffer = new ArrayBuffer(2276);
+      let projectDecodeBuffer = new ArrayBuffer(2296);
       let projectDecodeIndex = 0;
       const decodeChunk = (size) => {
         try {
@@ -316,12 +362,12 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
           base85decode(document.currentScript.getAttribute("data"), projectDecodeBuffer, projectDecodeIndex);
           document.currentScript.remove();
           projectDecodeIndex += size;
-          setProgress(interpolate(0.1, 0.75, projectDecodeIndex / 2276));
+          setProgress(interpolate(0.1, 0.75, projectDecodeIndex / 2295));
         } catch (e) {
           handleError(e);
         }
       };
-      </script><script data="wC_B+4****2****=b/~-:,:o+up9v.6rA+*b*DlNwLKzIUF*2OR)X7F5B`_;clH21^`SvhUG4hF395CDt()Ci}uw7CaWN(.9(4XI@uXfC7vmyM3AE8z2`ByjqiSqn~YAo/[7c0]_MCe3Hvvm]}5xw_^Lv[j^qRbS]uJwXcsZE5ZFQ)2p~E=\,RwwTlVR^_5=H9i8hAQP81cOuD-u]@2q]-2CT=uPD,CU0,uZ380^?|3apC4OM2c2,2_vXD:2Fm5@8=hig6=V))=yq9w5:z]s]Ed(|?79Y6_6{^8XL~P2,Ft36?RL?p2DTEJ9imo{VVTJM{hcP(xokq9C:S(sr(hPA|=bAts9+X8T6.W*?H_iKgZ+sJI_{v\r8nsL=}?Z:]Lj/Z9j:iW:|MGD:.e=Uwb.?3R?.5a^nSwSfibf44LbUnewA@XGv7Pd*nIy|mq6j^eQtcWM{nAb28En^3Ez,HD\oc:]U9`pMnb`VS_m/i,7I;{v~52Xl@vFKS:(To5Z[0or)P.*QnNv|5OV\e*U3=9|5EW0SzVvTnzmX/{Vke*bGeGySqHrC,we{eLSnRR3?Y5Zl`885|G26\dcbUKB]iJH^XW-^HVMuH.Z5kb.)vN\8B6wj@X1ks.mEtD|E~7pP0W4To-HX[Bt4WikMx:ANpHA2-1wEqX3wBwK@KZtXqLS5JbrtZftQ@octSH:Lgi)0kumH/q}}K\89(5q5e\N~J(1|5XW9i}qt\bF6c;E`y\\IgdvlCYHir,W7I0.S{[--GEVy:G`fNY_[m){AHR{dH:zyn6wP\-0v4.\+4(`/.\3gJN7/~Uhr}DQ-NLKI`FMMXB}T{4,8[kz{v3\p7~PI;;nv_0(;O?[JMUmTqN-a9^rp]aL4d?\q.MZC~KL``6K9k24ZGz+@kq796~n,AQ^q,At@N*Ng}39;Qt[R\dWp6Jwem?q9grEsArcn]?xUok_]DB=bXqFGJtk-pC;}e_T6Y^]2Z@E)ZM3+K9_ZR0L?g/M\07f8kMCpZD5est?{n,o\Q9h_4di@4}_X@9FG3bZh)Di6xLSOJGVG32=Vx]Co=n0`S~zRj7W_DhML{KVsXaaK/9lU7B70*mF.QB*ND_0Q_-BmF,(?9rmG:km*H*Kd;em?;*OCZsc{Ww[wUAbwH=Txru,bMhsGA3HNX~ZhxlCh0KmW.8RA[kb3w,6-DRFz\,q@+D2T+P/[+[tliv*-F:V_o(UU7R39P?_[.^-,w8O?0(orz.G~TOhBIuiq{)*nGEBPmYzuH.IRctSA.1VYq*aIORaK@DAUIO9;bY^r5X:iu1f|9E*UpFPg,*U9(Rv~;GIQlSq+e-f+V)WgviQNb.eREX,f*Z5HO`z-`GPY/GD`^^yyBbM)8i4qoZPz(y7@(.f0k;J69fW{EbCZzOy[jWbDhai[Af=8tj++J0v[=\SVbm/QRJyi7)}N\[Ety/Uw^+],ntQ/RYO{7|f~|Omk)[@Y0@:z)ewJ~BQ8E.M\OT;:gAu`J1Eb=rZ:cdYIxiG/1GD6eetGwuml~{d\woJ-SV2eLyk95?u?C4*/=On1/nK[Wb\yV6lL\~,=jKN9Ky0zp.(oPt2l/,4Z?hNqZCwvv_HqllQbtP+WTox4GczuJt[D_RvdqEtSP(_xRNSt@J21Jc8wrNunai5xjsF+Xj\ttCkrrAUoj?uRO{IUVyskqEB)P_oSH=f3Ozp]f7nO~n@l*MXZwE;Udw)\yj736TzP;Qf1j/:^=xQ|za/kW8C,b@Loc7F8XK.Hvdy7Rf;=2d47zU1383TLeC{2)\J)Lk`]2HR|dD[Guqq?Wsd_[`,NJyhq,hMJ|LQxX{0?M/;0]FY.W|dz}tgAf=Ru)`je]kxyafxc3p}5U;B;r/+*2Zr**r-OtD=Y3G*h+***J,***N****UB*o9~+Q;JId1o9l[PwJx^C5:y03Y98}vVJ\{T)ITGS?K)WT\.iuChpjUH1e.k=y:}C.SCbAo*B4BB{gZc+Joz^ntJ*6Vo2l7)(0aB?O?x1MgN[mxw0VFuebwl]O[`G4g4=Nf}SO/Q@(KH=^K45o@7`}H()y=BCkI7T/A-3w+\T4iIc\7ZEfUX3=yW6E(xr5vp3;H~pORNJn+XFve{3:9frdF_sHsk/dyE~YfC1Q^(-2rXZ,tre2]weU^b4R3**7V9**NA+**p{yP:Ul8K(ZM[@Jdb~;J^|m;J[O\R;.g/K(sglX9{Ax/P\a?Nk7u\9/A,6jB3HY/J10D.7ryUL)~=Fu)?~tI5?zIb1ZZnO@f3C8KD92+N,th^BOYBJg{a,V+WHhj;Vk-}QxyyNt{NB[y{^~z4]MGr5MU4FqNh].dKlYO-V2GhoSb`?*t9fm;1myN*Nw_uRHpg6AGC/{G))mHY,@O4c5MOChb}TA8U4xj^2lYCHu;-SbuRx7rA7@yIj/*|1}ksD6AYIx+`7R?v9:x(3SYxsejyxPtiA?lv.vFN:5J/aQgM5exn(\.TuJ~gBKDnemU5pR^r+MQ-^|hrAxw](ctoB6odRt]/CZR?]Ss~SXSRs,K=Xk,orYzqsVf}n_q]@4+szk`*Hf/+*2Zr**r-OtD[WA_q~:***uW***6*******************b*DlNwLKzIUF*2ONVT;BAS5,*4****2****tM)JlyNd9*JBY?*NXq-****************S;***UB*o9~+Q;JId1o9l[PwJx^C5:y03Y98}vVJ\{T)ITGS?Kszk`*Hf/+*2Zr**r-OtDwe@vD6-***7/***N**************~7D5,==G2;O?(/(/~5;Jd\CK(^d+n;4YV)I+owh;|VKYI5R]+ONAT;B5(***-(E**aedA*wfqX,*****">decodeChunk(2276)</script>
+      </script><script data="wC_B+4****2****@9B4^d,(q+:c{x.6rA+*b*DlNwLKzIUF*2OR)X7F5B`_;clH21^`SvhKD67z)XlZ0SwZKN?XXNYw_].+U~Yk9+^qr6iSx4eY;}({x0/UJoirUL~)`gUlcL-],y2FVvS?KL)5Sw=(ZksKXTIhO/|0v:Z2L5tjTDe[5oxSv7,HFVlr2zhu;piIO.rV7ari5cH@MlsyRbdCqFlKAui5myDO:vOo5f.aBAvyo\NINMjI[PDJORyr-\-[l9j9;Osu~yFwvGq8WqL*jyEB)dAdgMal82y[gxjRZ_zOevG]KvAL-Tuw=xX1[_Yy;0kiEz+HkoxY)GmKyFIt5F?b.:DT1PSsOmX`ipMN?m|U7t)VdHkLXM{0rM-K[SaEy:Nrk7fSIvF@(2/Hv8^3T7YU1I*\13X`qa?7[n^e]3=@L7Qf.0jAJ,bz6cE];N4:EIY_60EPr3IE`G5,|7eS}ymNamTpe,+jJSu2V|2^?fBNF;ic_s,313FaRCvmhpbcwUU|i(Ce)pL-}K.Xe^|Hw+ke;PpfBI/C;xE2{`CGDVq5\LB@8=^@}xotWI*gDYmn6zI1LlQB`bY]~4}*.c6g0j_|X]NDg:J6cNY3z-|,+xl7][xE?HNIBVT2fP.|+WnKr2l5dZ*QN]1k)s1Bv:[~J9F8y^mu{g;T1LqR\+r*=f0M4fpDKJV*ehtryz/uFWc=[m8sL?2P-D.2oi)b+EAYR39FV)TQ]cdipJemNaIWL(6HlU09]1{h:b0brM|^1AJiPSvU{tVHZsML]i{s1CTY~Hw`:3u:VT\{pi`dbhZplsbvE+VM?9j70BzalWD2uwaNYXFgPqkP-=t..YjG[{feSFXFU.2EH_lNO0_Rl*-P6toV2a,c(X-~|\UfVhr-_}5zD~6X0KRL6X_5vTPB_RHMhaKuLcx7_eYKL\oS{+O=OPPCu8FgAxXME(4|CXnC:lr1g*c13ebBZ]8N}n;\HAWpMT-n1]dT/lO(IX:2{|^A_(5[fhGG73(2NEZMAml9t:5]Qx3?r[7|(uI*SMSu6*E9PzhFDQz,QlW~xDQ[c1pX+P;*~uHDd\8-rr,y8d3LC59;c=F4H]JFL0r]t4zVnqvJQ6-*vOr-YFIp6Rz[DI,1;\F[Z:x2_p[3MpCQlnj6Yjw3QgliDndg;`pETqB^ifE-PzfdaM+UaMj7`H1;I}tw;UumKHQ[(.~w\3LDoqmOl-f`TrFp4;U80tsqPGY^jnQ7L:Kmeg}\?2I)5Z.S:X)]F=*8CUUXr_pXM6S6:Q\^5TAXdzq[J,wH_u9E@\ItG*_e|d;9J3tCp.FAtlzgsmO2o@HD4us1V9KH@Zbv7SHXOH{?vr_G4^eXRu:,B7PO-2cO\--nnrj0vLg*0ciSgZ]0/TB\ouqAzM~HGARe6qVYZ-|54-ZV7)Ft0gHEMyOXbqHEV|jp(6-TSX5JlFWr5gLfE9(GglUbkyGZ{8IgmE,bnajx2{nbTuU5H[PF2d5U09-N?*|PQ4\uFBcFY7v7Y;+wZbJ5S9k]E5pligH|8~6b][Xo-Iie\p:.uIy8E=uroGWF0tc*__)[tFfQ]kbbdmg)g@aUm;`6}/vQm8qa}f;Fff=4oen=Vf5kSz^T/)xECWRRzvK~:CAaZ;5oP@lBQ(f)xmBI.Ehy25nFCzQl;,LN.ANTn7(6P6I(I:Z@su;s6Ykf4+ZBX6{T~/FeBFY48ED.BJ0:Z@@Pd]gxzxkH(8l8F-y|EoDMs:bbgZhDmm80}3=M]mSSuOWdlYg,t{uIpqU|:RT64sp\yp[H_kl9nyt-@Du\@9xEH1X6dk-cvJu`uV8RRMBsQAv+oIxP_Po@UHGX0IM\AHfrs*Pq6A1(Bral_l:gtY}[XAYL[+c{P/9+r}n4|tP~.+8H***2B***PxBoUH?~)YJMMxjNoRZ58TZoI|s62;y**Y9*2lqJh=9_IFLbS9YdIVJ7`d@J{[-w8)-n7MTXC4TaDfnQKErR,?OSMh6?mzlk]/VT[e2;a^Wh:GQ7Xt9{aS5o7Zg1^3H(djAt`i=K~inS3O=0d7eLRO*3OBYL1TwBI~eu@mo`tKg+@UwzoWy-jYp]DFF{m^}^DC]ccW6bVE]=`qfnCiuL-zrXgpc3TbDQrvYUy+VGL]++^0`__9SXBroIMBE_P;B;r/+*2Zr**r-OtDwe@vD6-***7/***N****MmL5:YiEN;24BzI7pwR;8iv[JWXh)IS9ho9{wFJ(TGS?Kc8n]Mc]g:@3Rjk;|WQ@Sjx(:J0V^*5sxR3hcB\*=j295f0pddX.XT.b^YVl3I5;es2T.;OPTclwINKf(e*by\s{TQ[z.mq?mi`KVz8:g_4(0)sA5V*o.i,7J**+A(/EZiK(QWo9DSy8[TuJ[x:gxdXI|xct8_[9(4|[Nud*}\2WUVt.=:j_B.n+@AEb^Zh)LKAr`)oj`G2eMUv7w9S-e0gL?+Gg]p/VoSWtT}9n+_E;jbxBrMabe`gBEspS9ez3VW1hbIyLqo+JILJ2-@MZRAu?k5ORqB2_FmGk?W@`apR._{wS=q}-20HW[vCInk[UtanXN89Ca,/]3ufC7D\N04H***2B***H/`x7WK41e04N`EEApr-********************|m]oM|u\LOPbfoM5@HM*Jk:(-2rXZ,tre2]:26L/i;/**J71**NA+************ariDr=TZoI|s62;y**Y9*2lqJh=9_IFLbS9YdIVJ7`d@J{[-w8v{XqC7D\N04H***2B***=v4K4bAO`-7C-TdOoRZ5***************(tf**p{yP:Ul8K(ZM[@Jdb~;J^|m;J[O\R;.g/K(sglX9{Ax/P2d_e+0****0N{{*^s1**5cr*******">decodeChunk(2295)</script>
 
     <script>
       const getProjectData = (function() {
@@ -352,7 +398,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
         return () => (() => {
         const buffer = projectDecodeBuffer;
         projectDecodeBuffer = null; // Allow GC
-        return Promise.resolve(new Uint8Array(buffer, 0, 2276));
+        return Promise.resolve(new Uint8Array(buffer, 0, 2295));
       })().then(async (data) => {
           zip = await Scaffolding.JSZip.loadAsync(data);
           const file = findFileInZip('project.json');
